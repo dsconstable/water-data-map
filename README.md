@@ -1,4 +1,4 @@
-/* This is a map document using leaflet. It pulls things on the fly, for fast coolness */
+/* This is a map document using leaflet. It's fast and simple */
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,8 +33,8 @@
   <script>
   /* Set up the map with initial center and zoom level */
   var map = L.map('map', {
-    center: [38.00, -121], // EDIT latitude, longitude to re-center map
-    zoom: 12,  // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+    center: [38.50, -121.50], // EDIT latitude, longitude to re-center map
+    zoom: 10,  // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
     scrollWheelZoom: false
   });
   /* Control panel to display map layers */
@@ -53,8 +53,8 @@
   }); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
   // controlLayers.addBaseLayer(terrain, 'Stamen Terrain basemap');
   /* Display a blue point marker with pop-up text */
-  L.marker([38, -121]).addTo(map) // EDIT latitude, longitude to re-position marker
-  .bindPopup("Insert pop-up text here"); // EDIT pop-up text message
+  L.marker([38.5, -121.5]).addTo(map) // EDIT latitude, longitude to re-position marker
+  .bindPopup("Hi there, I am in the Delta!"); // EDIT pop-up text message
   /* Upload Latitude/Longitude markers from data.csv file, show Title in pop-up, and override initial center and zoom to fit all in map */
   // var customLayer = L.geoJson(null, {
   //  onEachFeature: function(feature, layer) {
