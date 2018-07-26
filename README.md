@@ -1,37 +1,71 @@
-## Welcome to GitHub Pages
+/* This is a map document using leaflet. It pulls things on the fly, for fast coolness */
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CA Safe Drinkg Water Challenge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
 
-You can use the [editor on GitHub](https://github.com/dsconstable/water-data-map/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+  <!-- Load Leaflet: instructions at http://leafletjs.com/download.html -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
+  integrity="sha384-Zh+y1U8o6/7ni8Mp8szvUfZjGeKKS10CGH3IlD6L1X+XwzYgQ1llOjw/Wslc0cma"
+  crossorigin="anonymous">
+  <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
+  integrity="sha384-6rCYjRgWDEI2RlZxiVihj1WIZB/uvFiRCGpavTVgFrSPDL0Bk1AiqCW+mmv5h0LP"
+  crossorigin="anonymous"></script>
+  <!-- Load Omnivore plugin to convert CSV to GeoJSON format -->
+  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+  <!-- Position the map and title with Cascading Style Sheet (.css) -->
+  <style>
+  body { margin:0; padding:0; }
+  #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+  #map-title { position: relative; margin-top: 10px; margin-left: 50px; float: left; background: white; border: 2px solid rgba(0,0,0,0.2); padding: 6px 8px; font-family: Helvetica; font-weight: bold; font-size: 24px; z-index: 800; }
+  </style>
+</head>
+<body>
 
-### Markdown
+  <!-- Display the map and title with HTML division tags  -->
+  <div id="map-title">EDIT your map title</div>
+  <div id="map"></div>
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/dsconstable/water-data-map/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+  <!-- Create the map content with JavaScript (.js) -->
+  <script>
+  /* Set up the map with initial center and zoom level */
+  var map = L.map('map', {
+    center: [38.00, -121], // EDIT latitude, longitude to re-center map
+    zoom: 12,  // EDIT from 1 to 18 -- decrease to zoom out, increase to zoom in
+    scrollWheelZoom: false
+  });
+  /* Control panel to display map layers */
+  // var controlLayers = L.control.layers( null, null, {
+  //  position: "topright",
+  //  collapsed: false
+  // }).addTo(map);
+  /* Carto light-gray basemap tiles with labels */
+  var light = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
+  }).addTo(map); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
+  // controlLayers.addBaseLayer(light, 'Carto Light basemap');
+  /* Stamen colored terrain basemap tiles with labels */
+  var terrain = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png', {
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+  }); // EDIT - insert or remove ".addTo(map)" before last semicolon to display by default
+  // controlLayers.addBaseLayer(terrain, 'Stamen Terrain basemap');
+  /* Display a blue point marker with pop-up text */
+  L.marker([38, -121]).addTo(map) // EDIT latitude, longitude to re-position marker
+  .bindPopup("Insert pop-up text here"); // EDIT pop-up text message
+  /* Upload Latitude/Longitude markers from data.csv file, show Title in pop-up, and override initial center and zoom to fit all in map */
+  // var customLayer = L.geoJson(null, {
+  //  onEachFeature: function(feature, layer) {
+  //    layer.bindPopup(feature.properties.Title);
+  //  }
+  // });
+  // var runLayer = omnivore.csv('data.csv', null, customLayer)
+  // .on('ready', function() {
+  //  map.fitBounds(runLayer.getBounds());
+  // }).addTo(map);
+  // controlLayers.addOverlay(customLayer, 'Markers from data.csv');
+  </script>
+</body>
+</html>
